@@ -13,7 +13,7 @@ It was initially created to help clean up configuration values for Django projec
 
 ## Installation:
 
-    pip install config-parser
+    pip install config-reader
 
 ## Development
 

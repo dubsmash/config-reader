@@ -1,0 +1,10 @@
+language: python
+
+python:
+  - "2.7"
+
+install:
+  - pip install -r requirements_testing.txt
+
+script:
+  - py.test tests --pep8 --flakes

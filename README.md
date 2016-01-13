@@ -14,6 +14,28 @@ It was initially created to help clean up configuration values for Django projec
 ## Installation:
 
     pip install config-reader
+    
+## Usage:
+
+    # Create a new config reader
+    config = ConfigReader([
+        'my_config_override.json',  # Easily override configurations locally
+        os.environ,  # Use configurations from OS environments (e.g. on Heroku)
+        'defaults.json'  # Use some default configuration values
+    ])
+    
+    # Use the new config reader
+    # Please note: These command while raise an ConfigKeyNotFoundError if the config key is not found in any of the
+    # data providers used above.
+    integer_value = config.get_int("MY_INT_KEY")
+    float_value = config.get_float("MY_FLOAT_KEY")
+    boolean_value = config.get_boolean("MY_BOOLEAN_KEY")
+    string_value = config.get_string("MY_STRING_KEY")
+    
+    # Get an optional key by setting optional=False. The return value is then either the value from the configuration
+    # or None if the value hasn't been configured.
+    optional_value = config.get_int("MY_OPTIONAL_INT_KEY", optional=True)
+    
 
 ## Development
 

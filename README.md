@@ -42,8 +42,7 @@ It was initially created to help clean up configuration values for Django projec
 Running the tests:
 
     
-    $ pip install -r requirements_testing.txt
-    $ py.test tests --pep8 --flakes
+    $ python setup.py test
 
 ## Developing new features
 

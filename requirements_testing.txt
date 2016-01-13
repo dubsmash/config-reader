@@ -1,3 +1,0 @@
-pytest==2.8.5
-pytest-flakes
-pytest-pep8

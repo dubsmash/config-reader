@@ -3,3 +3,5 @@
 *.pyc
 dist
 *egg-info
+.tox
+.eggs

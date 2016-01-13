@@ -4,8 +4,7 @@ Config parser is a nice little helper enabling you to automatically load differe
 It was initially created to help clean up configuration values for Django projects and make settings easily overridable but can also be used in various other use cases.
 
 [![Build Status](https://travis-ci.org/dubsmash/config-parser.svg?branch=master)](https://travis-ci.org/dubsmash/config-parser)
-[![Downloads](https://pypip.in/download/config-parser/badge.png)](https://pypi.python.org/pypi/config-parser/)
-[![Latest Version](https://pypip.in/version/config-parser/badge.png)](https://pypi.python.org/pypi/config-parser/)
+[![PyPI version](https://badge.fury.io/py/config-reader.svg)](https://pypi.python.org/pypi/config-parser/)
 
 
 ## Requirements

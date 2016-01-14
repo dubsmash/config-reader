@@ -85,7 +85,8 @@ class TestConfigReaderFunctionality(TestCase):
 
     def test_ignore_file_not_present(self):
         """
-        ConfigReader expects either strings (filenames) or Mapping types. If the file is not present, it should ignore it
+        ConfigReader expects either strings (filenames) or Mapping types.
+        If the file is not present, it should ignore it
         merely and move on.
         :return:
         """

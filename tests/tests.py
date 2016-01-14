@@ -82,3 +82,15 @@ class TestConfigReaderFunctionality(TestCase):
         """
         value = self.config.get_string_list("list_of_strings")
         self.assertGreater(len(value), 1)
+
+    def test_ignore_file_not_present(self):
+        """
+        ConfigReader expects either strings (filenames) or Mapping types. If the file is not present, it should ignore it
+        merely and move on.
+        :return:
+        """
+        from collections import Mapping
+        filename_to_ignore = "i_do_not_exist"
+        config = reader.ConfigReader([os.environ, filename_to_ignore])
+        self.assertEqual(len(config.configs), 1)
+        self.assertEqual(isinstance(config.configs[0], Mapping), True)

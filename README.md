@@ -86,3 +86,8 @@ Push to master with tags:
 Publish to pypi:
 
     $ python setup.py publish
+
+
+## Contributors
+
+This project was created by Saurav Biswas, Benedikt Forchhammer and Tim Specht.

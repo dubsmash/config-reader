@@ -2,6 +2,7 @@ import json
 import os
 from collections import Mapping
 from distutils import util
+from past.builtins import basestring  # noqa, redefined-builtin
 
 from config_reader.exceptions import ConfigKeyNotFoundError, ConfigTypeCastError, ConfigTypeError
 

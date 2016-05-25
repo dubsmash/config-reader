@@ -9,15 +9,18 @@ import sys
 
 class Tox(TestCommand):
     user_options = [('tox-args=', 'a', "Arguments to pass to tox")]
+
     def initialize_options(self):
         TestCommand.initialize_options(self)
         self.tox_args = None
+
     def finalize_options(self):
         TestCommand.finalize_options(self)
         self.test_args = []
         self.test_suite = True
+
     def run_tests(self):
-        #import here, cause outside the eggs aren't loaded
+        # import here, cause outside the eggs aren't loaded
         import tox
         import shlex
         args = self.tox_args
@@ -84,7 +87,7 @@ setup(
     packages=get_packages('config_reader'),
     package_data=get_package_data('config_reader'),
     tests_require=['tox'],
-    cmdclass = {'test': Tox},
+    cmdclass={'test': Tox},
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',

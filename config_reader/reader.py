@@ -1,10 +1,12 @@
 import json
 import os
+from builtins import str
 from collections import Mapping
 from distutils import util
-from past.builtins import basestring  # noqa, redefined-builtin
 
-from config_reader.exceptions import ConfigKeyNotFoundError, ConfigTypeCastError, ConfigTypeError
+from config_reader.exceptions import (ConfigKeyNotFoundError,
+                                      ConfigTypeCastError, ConfigTypeError)
+from past.builtins import basestring  # noqa, redefined-builtin
 
 
 class ConfigReader(object):

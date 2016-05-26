@@ -1,10 +1,12 @@
 import json
 import os
+from builtins import str
 from collections import Mapping
 from distutils import util
-from past.builtins import basestring  # noqa, redefined-builtin
 
-from config_reader.exceptions import ConfigKeyNotFoundError, ConfigTypeCastError, ConfigTypeError
+from config_reader.exceptions import (ConfigKeyNotFoundError,
+                                      ConfigTypeCastError, ConfigTypeError)
+from past.builtins import basestring  # noqa, redefined-builtin
 
 
 class ConfigReader(object):
@@ -65,9 +67,9 @@ class ConfigReader(object):
         Tries to fetch a variable from the config and expects it to be a string
         :param key: The variable to search for in a possible list of configs
         :param optional: Whether to raise ConfigKeyNotFoundError if key was not found.
-        :return: unicode string
+        :return: str string
         """
-        return self._get_typed_value(key, unicode, lambda x: unicode(x), optional)
+        return self._get_typed_value(key, str, lambda x: str(x), optional)
 
     def get_string_list(self, key, optional=False):
         """

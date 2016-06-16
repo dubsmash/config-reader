@@ -87,6 +87,7 @@ setup(
     packages=get_packages('config_reader'),
     package_data=get_package_data('config_reader'),
     tests_require=['tox'],
+    install_requires=['future']
     cmdclass={'test': Tox},
     classifiers=[
         'Development Status :: 5 - Production/Stable',

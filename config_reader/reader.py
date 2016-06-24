@@ -5,7 +5,9 @@ from collections import Mapping
 from distutils import util
 
 from config_reader.exceptions import (ConfigKeyNotFoundError,
-                                      ConfigTypeCastError, ConfigTypeError)
+                                      ConfigParseError,
+                                      ConfigTypeCastError,
+                                      ConfigTypeError)
 from past.builtins import basestring  # noqa, redefined-builtin
 
 
@@ -26,7 +28,10 @@ class ConfigReader(object):
             elif isinstance(name, basestring):
                 path = os.path.abspath(name)
                 if os.path.exists(path):
-                    self.configs.append(json.loads(open(path).read()))
+                    try:
+                        self.configs.append(json.loads(open(path).read()))
+                    except ValueError as e:
+                        raise ConfigParseError(path, e)
             else:
                 msg = "ConfigReader expects list of basestring|Mapping. Got {type} instead".format(type=type(name))
                 raise ValueError(msg)

@@ -16,3 +16,10 @@ class ConfigKeyNotFoundError(KeyError):
     def __init__(self, key):
         msg = "Configuration key {key} was not found.".format(key=key)
         super(ConfigKeyNotFoundError, self).__init__(msg)
+
+
+class ConfigParseError(ValueError):
+    def __init__(self, filename, error):
+        fmt_dict = {'filename': filename, 'error': error}
+        msg = "ConfigReader could not parse file '{filename}':\n{error}".format(**fmt_dict)
+        super(ConfigParseError, self).__init__(msg)

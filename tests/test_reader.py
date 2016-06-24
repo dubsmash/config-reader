@@ -2,10 +2,11 @@ import os
 
 from pyflakes.test.harness import TestCase
 import pytest
-from config_reader import reader
 
-from config_reader.exceptions import ConfigTypeCastError, \
-    ConfigKeyNotFoundError
+from config_reader import reader
+from config_reader.exceptions import (ConfigKeyNotFoundError,
+                                      ConfigParseError,
+                                      ConfigTypeCastError)
 
 
 class TestConfigReaderFunctionality(TestCase):
@@ -81,7 +82,7 @@ class TestConfigReaderFunctionality(TestCase):
         present in the config,separated by newlines
         """
         value = self.config.get_string_list("list_of_strings")
-        self.assertGreater(len(value), 1)
+        assert len(value) > 1
 
     def test_ignore_file_not_present(self):
         """
@@ -95,3 +96,11 @@ class TestConfigReaderFunctionality(TestCase):
         config = reader.ConfigReader([os.environ, filename_to_ignore])
         self.assertEqual(len(config.configs), 1)
         self.assertEqual(isinstance(config.configs[0], Mapping), True)
+
+    def test_invalid_config_raises_error(self):
+        """
+        Test that failure to parse the config file to json raises
+        a descriptive error message.
+        """
+        with pytest.raises(ConfigParseError):
+            reader.ConfigReader(['tests/static/test_config_broken.json'])

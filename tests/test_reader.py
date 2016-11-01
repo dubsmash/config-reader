@@ -62,7 +62,7 @@ class TestConfigReaderFunctionality(TestCase):
 
     def test_non_existant_variable_lookup_raises_error(self):
         """
-        Tests that trying to get a non existant variable in the configs list,
+        Tests that trying to get a non existent variable in the configs list,
         raises a ConfigKeyNotFoundError.
         """
         with pytest.raises(ConfigKeyNotFoundError):
@@ -70,7 +70,7 @@ class TestConfigReaderFunctionality(TestCase):
 
     def test_optional_variable_returns_none(self):
         """
-        Test that trying to get a non existant variable
+        Test that trying to get a non existent variable
         with optional set to False returns None
         """
         value = self.config.get_string("NON_EXISTANT", optional=True)

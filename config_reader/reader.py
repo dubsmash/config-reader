@@ -1,14 +1,17 @@
 import json
 import os
-from builtins import str
 from collections import Mapping
 from distutils import util
+
+import yaml
+from builtins import str
+from past.builtins import basestring  # noqa, redefined-builtin
+from yaml.error import YAMLError
 
 from config_reader.exceptions import (ConfigKeyNotFoundError,
                                       ConfigParseError,
                                       ConfigTypeCastError,
                                       ConfigTypeError)
-from past.builtins import basestring  # noqa, redefined-builtin
 
 
 class ConfigReader(object):
@@ -19,6 +22,7 @@ class ConfigReader(object):
     :param filenames: list of filenames as strings or plain dictionaries
     :return: None
     """
+
     def __init__(self, filenames):
         self.configs = []
 
@@ -28,13 +32,34 @@ class ConfigReader(object):
             elif isinstance(name, basestring):
                 path = os.path.abspath(name)
                 if os.path.exists(path):
-                    try:
-                        self.configs.append(json.loads(open(path).read()))
-                    except ValueError as e:
-                        raise ConfigParseError(path, e)
+                    self.configs.append(self._read_file_data(path))
             else:
                 msg = "ConfigReader expects list of basestring|Mapping. Got {type} instead".format(type=type(name))
                 raise ValueError(msg)
+
+    def _read_file_data(self, path):
+        """
+        Attempts to read the contents of the given configuration file.
+        :param path: Path to a configuration file.
+        :raises: ConfigParseError if file does not exist or cannot be read.
+        :return: Dictionary of configuration data.
+        """
+        _, ext = os.path.splitext(path)
+        # YAML files
+        if ext in ('.yml', '.yaml'):
+            try:
+                with open(path) as f:
+                    return yaml.safe_load(f)
+            except YAMLError as e:
+                raise ConfigParseError(path, e)
+        # JSON files
+        elif ext == '.json':
+            try:
+                return json.loads(open(path).read())
+            except ValueError as e:
+                raise ConfigParseError(path, e)
+        else:
+            raise ConfigParseError(path, TypeError("Unsupported file type {}".format(ext)))
 
     def get_int(self, key, optional=False):
         """
@@ -85,12 +110,11 @@ class ConfigReader(object):
         :param optional: Throw a ConfigKeyNotFoundError if key is not found and this was set to False
         :return: list
         """
-        s = self.get_string(key, optional)
-
-        if s is None:
-            return None
-
-        return s.splitlines()
+        try:
+            return self._get_typed_value(key, list, lambda x: list(x), optional)
+        except ConfigTypeError:
+            s = self.get_string(key, optional)
+            return s.splitlines() if s else []
 
     def _get(self, key):
         """

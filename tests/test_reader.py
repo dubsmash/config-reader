@@ -1,7 +1,7 @@
 import os
 
-from pyflakes.test.harness import TestCase
 import pytest
+from pyflakes.test.harness import TestCase
 
 from config_reader import reader
 from config_reader.exceptions import (ConfigKeyNotFoundError,
@@ -9,19 +9,7 @@ from config_reader.exceptions import (ConfigKeyNotFoundError,
                                       ConfigTypeCastError)
 
 
-class TestConfigReaderFunctionality(TestCase):
-    """
-    Tests the various functionalities in the ConfigReader class
-    """
-    def setUp(self):
-        """
-        Creates a config object and populates it with a list of dicts,
-        where each dict is either loaded from a JSON file
-        or is a custom dictionary (e.g os.environ)
-        """
-        self.config = reader.ConfigReader([os.environ,
-                                           "tests/static/test_config.json"])
-
+class BaseConfigReaderTests(object):
     def test_get_boolean_type_variable_from_config(self):
         """
         Tests for the presence of a variable in the configs list
@@ -103,4 +91,36 @@ class TestConfigReaderFunctionality(TestCase):
         a descriptive error message.
         """
         with pytest.raises(ConfigParseError):
-            reader.ConfigReader(['tests/static/test_config_broken.json'])
+            reader.ConfigReader([self.broken_file])
+
+
+class TestJsonConfigReader(BaseConfigReaderTests, TestCase):
+    """
+    Tests the various functionality in the ConfigReader class
+    """
+
+    def setUp(self):
+        """
+        Creates a config object and populates it with a list of dicts,
+        where each dict is either loaded from a JSON file
+        or is a custom dictionary (e.g os.environ)
+        """
+        self.config = reader.ConfigReader([os.environ,
+                                           "tests/static/test_config.json"])
+        self.broken_file = 'tests/static/test_config_broken.json'
+
+
+class TestYamlConfigReader(BaseConfigReaderTests, TestCase):
+    """
+    Tests the various functionality in the ConfigReader class
+    """
+
+    def setUp(self):
+        """
+        Creates a config object and populates it with a list of dicts,
+        where each dict is either loaded from a JSON file
+        or is a custom dictionary (e.g os.environ)
+        """
+        self.config = reader.ConfigReader([os.environ,
+                                           "tests/static/test_config.yaml"])
+        self.broken_file = 'tests/static/test_config_broken.yml'

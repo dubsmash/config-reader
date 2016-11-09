@@ -86,8 +86,8 @@ setup(
     author_email='opensource@dubsmash.com',
     packages=get_packages('config_reader'),
     package_data=get_package_data('config_reader'),
-    tests_require=['tox'],
-    install_requires=['future'],
+    tests_require=['tox', 'pytest', 'pyflakes'],
+    install_requires=['future', 'PyYAML'],
     cmdclass={'test': Tox},
     classifiers=[
         'Development Status :: 5 - Production/Stable',

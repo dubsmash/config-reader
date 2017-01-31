@@ -67,10 +67,10 @@ class BaseConfigReaderTests(object):
     def test_for_string_separated_by_newline(self):
         """
         Test that we can get a list of strings from a string
-        present in the config,separated by newlines
+        present in the config, separated by newlines.
         """
         value = self.config.get_string_list("list_of_strings")
-        assert len(value) > 1
+        self.assertEqual(len(value), 2)
 
     def test_ignore_file_not_present(self):
         """

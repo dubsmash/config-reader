@@ -111,7 +111,7 @@ class ConfigReader(object):
         :return: list
         """
         try:
-            return self._get_typed_value(key, list, lambda x: list(x), optional)
+            return self._get_typed_value(key, list, lambda x: x.splitlines(), optional)
         except ConfigTypeError:
             s = self.get_string(key, optional)
             return s.splitlines() if s else []

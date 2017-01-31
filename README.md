@@ -1,6 +1,6 @@
 ## Config Reader
 
-Config parser is a nice little helper enabling you to automatically load different configuration values from various sources including .json files and the OS environment in a unified way.
+Config parser is a nice little helper enabling you to automatically load different configuration values from various sources including .json and .yaml files and the OS environment in a unified way.
 It was initially created to help clean up configuration values for Django projects and make settings easily overridable but can also be used in various other use cases.
 
 [![Build Status](https://travis-ci.org/dubsmash/config-reader.svg?branch=master)](https://travis-ci.org/dubsmash/config-reader)
@@ -9,7 +9,7 @@ It was initially created to help clean up configuration values for Django projec
 
 ## Requirements
 
-* Tested for python 2.7
+* Tested for python 2.7 and 3.5
 
 ## Installation:
 
